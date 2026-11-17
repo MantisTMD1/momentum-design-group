@@ -176,6 +176,7 @@
         const match = key === "all" || p.dataset.tags.split(" ").includes(key);
         p.hidden = !match;
         p.classList.remove("is-entering");
+        if (match && push !== undefined) p.classList.add("is-in");
         if (match) {
           if (!reduceMotion && push !== undefined) {
             void p.offsetWidth;
@@ -196,6 +197,47 @@
     };
     buttons.forEach((b) => b.addEventListener("click", () => apply(b.dataset.filter, true)));
     apply(new URLSearchParams(location.search).get("sector") || "all");
+  }
+
+  /* Scroll reveals: things fade up as they enter the viewport, in a short cascade */
+  const revealSel = [
+    ".people__image", ".people__text", ".what h2", ".what__intro",
+    ".banner", ".person", ".action__intro", ".moment", ".project",
+    ".culture-strip img", ".split__image", ".split__text", ".callout__inner",
+    ".post-card", ".article__hero", ".article__pair figure",
+    ".contact__item", ".contact__image", ".map",
+  ].join(",");
+  const revealEls = [...document.querySelectorAll(revealSel)];
+  const track = document.querySelector(".sectors__track");
+  const showAll = () => {
+    revealEls.forEach((el) => el.classList.add("is-in"));
+    if (track) [...track.children].forEach((el) => el.classList.add("is-in"));
+  };
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    showAll();
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      let i = 0;
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        io.unobserve(el);
+        if (el === track) {
+          // the carousel reveals its cards together, left to right
+          [...track.children].forEach((card, n) => {
+            card.style.setProperty("--reveal-delay", `${Math.min(n, 4) * 90}ms`);
+            card.classList.add("is-in");
+          });
+          return;
+        }
+        el.style.setProperty("--reveal-delay", `${Math.min(i++, 6) * 80}ms`);
+        el.classList.add("is-in");
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+    revealEls.forEach((el) => io.observe(el));
+    if (track) io.observe(track);
+    // never leave anything invisible if the page is printed
+    window.addEventListener("beforeprint", showAll);
   }
 
   /* Footer year */
