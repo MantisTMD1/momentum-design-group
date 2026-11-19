@@ -651,6 +651,59 @@ svg {
   color: var(--brown);
 }
 
+/* ---------- Let's talk band (above the footer) ---------- */
+
+.talk {
+  padding-bottom: clamp(56px, 7vw, 96px);
+}
+
+.talk__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px 48px;
+}
+
+.talk__text {
+  flex: 1 1 360px;
+  padding-left: clamp(18px, 2.4vw, 28px);
+  border-left: 6px solid var(--rust);
+}
+
+.talk h2 {
+  color: var(--rust);
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+.talk p {
+  margin-top: 0.4rem;
+  font-size: 1.05rem;
+}
+
+.talk__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+}
+
+.talk__phone {
+  color: var(--brown);
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.talk__phone:hover {
+  color: var(--rust);
+}
+
 /* ---------- Footer ---------- */
 
 .footer {
@@ -873,6 +926,36 @@ svg {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: clamp(36px, 4vw, 52px) clamp(20px, 2.5vw, 32px);
+}
+
+/* small section labels: "Principals", "The team" */
+.team__label {
+  margin: 0 0 clamp(18px, 2vw, 24px);
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.team__grid + .team__label {
+  margin-top: clamp(56px, 7vw, 88px);
+}
+
+/* principals: three larger cards */
+.team__grid--lead {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 40px);
+}
+
+.team__grid--lead .person__name {
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+}
+
+.team__grid--lead .person__role {
+  font-size: 1rem;
 }
 
 .person__photo {
@@ -1538,6 +1621,11 @@ body.dialog-open {
     gap: 32px 16px;
   }
 
+  .team__grid--lead {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+  }
+
   .person__name {
     font-size: 1.05rem;
   }
@@ -1901,7 +1989,7 @@ body.dialog-open {
     .banner, .person, .action__intro, .moment, .project,
     .culture-strip img, .split__image, .split__text, .callout__inner,
     .post-card, .article__hero, .article__pair figure,
-    .contact__item, .contact__image, .map
+    .contact__item, .contact__image, .map, .talk__inner
   ) {
     opacity: 0;
     transform: translateY(28px);

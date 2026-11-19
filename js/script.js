@@ -205,7 +205,7 @@
     ".banner", ".person", ".action__intro", ".moment", ".project",
     ".culture-strip img", ".split__image", ".split__text", ".callout__inner",
     ".post-card", ".article__hero", ".article__pair figure",
-    ".contact__item", ".contact__image", ".map",
+    ".contact__item", ".contact__image", ".map", ".talk__inner",
   ].join(",");
   const revealEls = [...document.querySelectorAll(revealSel)];
   const track = document.querySelector(".sectors__track");
